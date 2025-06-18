@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="hi" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolyMandi - प्लास्टिक ग्रेन्यूल्स मार्केटप्लेस</title>
+    <meta name="description" content="AI-powered plastic granules B2B & B2C marketplace in India. Buy and sell HDPE, LDPE, PP, PVC granules with multilingual support.">
+    <meta name="keywords" content="plastic granules, HDPE, LDPE, PP, PVC, marketplace, India, B2B">
+    
+    <!-- Tailwind CSS -->
+    <!-- For production, replace with locally built Tailwind CSS -->
+    <!-- Build command: npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        console.warn('⚠️  For production use, replace CDN Tailwind with locally built CSS. See: https://tailwindcss.com/docs/installation');
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Fonts -->
+    <link href="https://www.freepik.com/free-photo/sack-sorted-multicoloured-shredded-plastic-garbage-waste-recycling-factory_59152116.htm#fromView=keyword&page=1&position=0&uuid=0cadc7c2-2a49-45b6-81b4-627be17c9aec&query=Plastic+Granules" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans Devanagari', 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-recycle text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">PolyMandi</h1>
+                        <p class="text-xs text-gray-600">प्लास्टिक ग्रेन्यूल्स मार्केटप्लेस</p>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-8">
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="उत्पाद खोजें... (HDPE, LDPE, PP, PVC)"
+                            class="w-full px-4 py-3 pl-12 pr-20 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-colors">
+                            <i class="fas fa-search"></i>
+                        </button>                        <!-- Voice Search -->
+                        <button id="voiceSearch" class="absolute right-16 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-green-500 transition-colors">
+                            <i class="fas fa-microphone text-lg"></i>
+                        </button>
+                        
+                        <!-- Search Suggestions -->
+                        <div id="searchSuggestions" class="hidden absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                            <!-- Search suggestions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language Selector & User Menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- Language Selector -->
+                    <select id="languageSelector" class="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="hi">हिंदी</option>
+                        <option value="en">English</option>
+                        <option value="hi-en">Hinglish</option>
+                    </select>
+
+                    <!-- User Menu -->
+                    <div class="relative">
+                        <button id="userMenuButton" class="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                            <i class="fas fa-user text-gray-600"></i>
+                            <span class="text-gray-700">अकाउंट</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">लॉगिन</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">रजिस्टर</a>
+                            <hr class="my-1">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">सेलर बनें</a>
+                        </div>
+                    </div>                    <!-- Cart -->
+                    <button class="relative p-2 text-gray-600 hover:text-green-500 transition-colors">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span class="cart-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Category Navigation -->
+            <div class="mt-4 border-t pt-4">
+                <div class="flex items-center space-x-8 overflow-x-auto">
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="all">
+                        <i class="fas fa-th-large"></i>
+                        <span>सभी श्रेणियां</span>
+                    </a>
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="HDPE">
+                        <i class="fas fa-cube"></i>
+                        <span>HDPE</span>
+                    </a>
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="LDPE">
+                        <i class="fas fa-cube"></i>
+                        <span>LDPE</span>
+                    </a>
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="PP">
+                        <i class="fas fa-cube"></i>
+                        <span>PP</span>
+                    </a>
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="PVC">
+                        <i class="fas fa-cube"></i>
+                        <span>PVC</span>
+                    </a>
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="PET">
+                        <i class="fas fa-cube"></i>
+                        <span>PET</span>
+                    </a>
+                    <a href="#" class="category-link flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-green-50 hover:text-green-600 transition-colors whitespace-nowrap" data-category="Recycled">
+                        <i class="fas fa-recycle"></i>
+                        <span>रीसाइकल्ड</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-2xl p-8 mb-8">
+            <div class="flex items-center justify-between">
+                <div class="flex-1">
+                    <h2 class="text-4xl font-bold mb-4">
+                        AI-पावर्ड प्लास्टिक ग्रेन्यूल्स मार्केटप्लेस
+                    </h2>
+                    <p class="text-xl mb-6 opacity-90">
+                        भारत का सबसे बड़ा B2B & B2C प्लास्टिक रॉ मैटेरियल प्लेटफॉर्म
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            <i class="fas fa-comments mr-2"></i>
+                            AI चैट असिस्टेंट
+                        </button>
+                        <button class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-600 transition-colors">
+                            <i class="fas fa-store mr-2"></i>
+                            सेलर बनें
+                        </button>
+                    </div>
+                </div>
+                <div class="hidden lg:block">
+                    <img src="https://th.bing.com/th/id/OIP.7QO_U2J-DxAP-Un1hi2XlwHaFF?w=800&h=550&rs=1&pid=ImgDetMain" alt="Plastic Granules" class="w-64 h-48 object-cover rounded-xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Stats -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div class="text-3xl font-bold text-green-600 mb-2">50+</div>
+                <div class="text-gray-600">प्रकार के ग्रेन्यूल्स</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div class="text-3xl font-bold text-blue-600 mb-2">1000+</div>
+                <div class="text-gray-600">वेरिफाइड सेलर्स</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div class="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+                <div class="text-gray-600">AI सपोर्ट</div>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                <div class="text-3xl font-bold text-orange-600 mb-2">3</div>
+                <div class="text-gray-600">भाषाओं में</div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">फीचर्ड प्रोडक्ट्स</h3>
+                <a href="#" class="text-green-600 hover:text-green-700 font-semibold">सभी देखें →</a>
+            </div>
+            <div id="featuredProducts" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Trending Products -->
+        <section class="mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">ट्रेंडिंग प्रोडक्ट्स</h3>
+                <a href="#" class="text-green-600 hover:text-green-700 font-semibold">सभी देखें →</a>
+            </div>
+            <div id="trendingProducts" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6">श्रेणियों के आधार पर खोजें</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer">
+                    <div class="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-cube text-green-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">HDPE</h4>
+                    <p class="text-sm text-gray-600">120+ प्रोडक्ट्स</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-cube text-blue-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">LDPE</h4>
+                    <p class="text-sm text-gray-600">85+ प्रोडक्ट्स</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-cube text-purple-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">PP</h4>
+                    <p class="text-sm text-gray-600">95+ प्रोडक्ट्स</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-cube text-orange-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">PVC</h4>
+                    <p class="text-sm text-gray-600">70+ प्रोडक्ट्स</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer">
+                    <div class="w-16 h-16 bg-red-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-cube text-red-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">PET</h4>
+                    <p class="text-sm text-gray-600">45+ प्रोडक्ट्स</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition-shadow cursor-pointer">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-recycle text-gray-600 text-2xl"></i>
+                    </div>
+                    <h4 class="font-semibold text-gray-800">रीसाइकल्ड</h4>
+                    <p class="text-sm text-gray-600">200+ प्रोडक्ट्स</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">हमारी विशेषताएं</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-robot text-green-600 text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3">AI चैट असिस्टेंट</h4>
+                    <p class="text-gray-600">हमारे AI असिस्टेंट से अपनी भाषा में बात करें और सही प्रोडक्ट की सलाह पाएं।</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-language text-blue-600 text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3">मल्टी-लैंग्वेज सपोर्ट</h4>
+                    <p class="text-gray-600">हिंदी, अंग्रेजी और हिंग्लिश में प्लेटफॉर्म का उपयोग करें।</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-purple-600 text-2xl"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-3">वेरिफाइड सेलर्स</h4>
+                    <p class="text-gray-600">सभी सेलर्स सत्यापित हैं और गुणवत्तापूर्ण प्रोडक्ट्स बेचते हैं।</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Chat Widget -->
+    <div id="chatWidget" class="fixed bottom-6 right-6 z-50">
+        <button id="chatToggle" class="bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-colors">
+            <i class="fas fa-comments text-xl"></i>
+        </button>
+        
+        <!-- Chat Window -->
+        <div id="chatWindow" class="hidden absolute bottom-16 right-0 w-80 h-96 bg-white rounded-xl shadow-2xl border">
+            <div class="bg-green-500 text-white p-4 rounded-t-xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-robot"></i>
+                        <span class="font-semibold">PolyMandi AI</span>
+                    </div>
+                    <button id="chatClose" class="hover:bg-green-600 rounded p-1">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="chatMessages" class="flex-1 p-4 h-64 overflow-y-auto">
+                <div class="bg-gray-100 p-3 rounded-lg mb-4">
+                    <p class="text-sm">नमस्ते! मैं PolyMandi का AI असिस्टेंट हूं। मैं आपको सही प्लास्टिक ग्रेन्यूल्स खोजने में मदद कर सकता हूं। कैसे मदद कर सकता हूं?</p>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t">
+                <div class="flex space-x-2">
+                    <input 
+                        type="text" 
+                        id="chatInput"
+                        placeholder="अपना संदेश टाइप करें..."
+                        class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                    <button id="sendMessage" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded flex items-center justify-center">
+                            <i class="fas fa-recycle text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">PolyMandi</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">भारत का सबसे बड़ा AI-पावर्ड प्लास्टिक ग्रेन्यूल्स मार्केटप्लेस</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">प्रोडक्ट्स</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">HDPE ग्रेन्यूल्स</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">LDPE ग्रेन्यूल्स</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">PP ग्रेन्यूल्स</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">PVC ग्रेन्यूल्स</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">रीसाइकल्ड ग्रेन्यूल्स</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">सेवाएं</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">सेलर रजिस्ट्रेशन</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">बल्क ऑर्डर</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">AI असिस्टेंट</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">पेमेंट सपोर्ट</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">लॉजिस्टिक्स</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">संपर्क</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>
+                            <i class="fas fa-phone mr-2"></i>
+                            +91-8383848219
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope mr-2"></i>
+                            npdimagine@gmail.com
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            Ghevra, North West Delhi, Delhi, India
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-8 border-gray-700">
+            
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">© 2025 PolyMandi. सभी अधिकार सुरक्षित।</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors text-sm">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-xl">
+            <div class="flex items-center space-x-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+                <span class="text-lg">लोड हो रहा है...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
